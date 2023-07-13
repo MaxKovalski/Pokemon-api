@@ -9,9 +9,11 @@
     <title>Document</title>
   </head>
   <body>
+ 
     <main>
       <div class="search-container">
-        <input
+<div class="border-style-search">
+        <div class="search-frame"><input
           onkeyup="showResults(this.value)"
           autocomplete="off"
           id="pokemonName"
@@ -19,13 +21,34 @@
           placeholder="Pokemon Name"
           value=""
         />
-        <button id="search">Serch</button>
-        <div id="result"></div>
+        <button id="search">Search</button></div>
+        
+        <div class="result-frame"><div id="result"></div></div>
+   
       </div>
-
+    </div>
       <div id="pokeShow" class="pokemon-display">
-        <h1 id="pokemonTitle"></h1>
-        <div id="pokemonImg"></div>
+        <div class="left">
+          <h4>
+            Name:
+            <span id="pokemonTitle"></sp>
+          </h4>
+          <h4>
+            Ability:
+            <span id="ability"></span>
+          </h4>
+        </div>
+        <div id="pokemonImgDiv"></div>
+        <div class="right">
+          <h4>
+            Type:
+            <span id="type"></span>
+          </h4>
+          <h4>
+            Weight:
+            <span id="weight"></span>
+          </h4>
+        </div>
       </div>
     </main>
   </body>

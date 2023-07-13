@@ -1,15 +1,29 @@
 const search = document.getElementById("search");
 const pokemonTitle = document.getElementById("pokemonTitle");
+const pokemonImageDiv = document.getElementById("pokemonImgDiv");
+const pokemonImg = document.createElement("img");
+const pokemonAbility = document.getElementById("ability");
+const pokemonType = document.getElementById("type");
+const pokemonWeight = document.getElementById("weight");
 let pokemonArray = [];
 async function callApi() {
-  //   let pokemonUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.name..id}.png`;
   const pokemonName = document.querySelector("#pokemonName").value;
   let response = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
   );
   if (response.status == 200) {
     return response.json().then((data) => {
-      pokemonTitle.innerHTML = data.name;
+      if (data.name === undefined) {
+        pokemonTitle.innerHTML = " ";
+        return;
+      } else {
+        pokemonTitle.innerHTML = data.name;
+        pokemonAbility.innerHTML = data.abilities[0].ability.name;
+        pokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
+        pokemonImageDiv.appendChild(pokemonImg);
+        pokemonType.innerHTML = data.types[0].type.name;
+        pokemonWeight.innerHTML = data.weight;
+      }
     });
   } else {
     console.error("***Call Api Error***");
@@ -18,8 +32,7 @@ async function callApi() {
 
 search.addEventListener("click", () => {
   callApi();
-  console.log("test");
-  document.getElementById("test4").innerHTML = "";
+  document.getElementById("resultsAll").innerHTML = "";
 });
 
 let counter = "";
@@ -29,7 +42,6 @@ async function getAllPokemons() {
     .then((data) => {
       data.results.forEach((pokemon) => {
         pokemonArray.push(pokemon.name);
-        // console.log(pokemonArray);
       });
     });
 }
@@ -37,7 +49,7 @@ getAllPokemons();
 
 function autocompleteMatch(input) {
   if (input == "") {
-    return [];
+    return;
   }
   let reg = new RegExp(input);
   return pokemonArray.filter(function (term) {
@@ -55,9 +67,9 @@ function showResults(val) {
   let list = "";
   let terms = autocompleteMatch(val);
   for (i = 0; i < terms.length; i++) {
-    list += `<button class="test" onclick=btnClick(this) value="${terms[i]}"><h4 class="test1">${terms[i]}</h4></button>`;
+    list += `<button class="result-btn" onclick=btnClick(this) value="${terms[i]}"><h4 >${terms[i]}</h4></button>`;
   }
-  res.innerHTML = `<ul id="test4">${list}</ul>`;
+  res.innerHTML = `<ul id="resultsAll">${list}</ul>`;
 }
 function btnClick(e) {
   const pokemonName = (document.querySelector("#pokemonName").value = e.value);
