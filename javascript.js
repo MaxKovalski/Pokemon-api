@@ -23,19 +23,20 @@ async function callApi() {
         pokemonImageDiv.appendChild(pokemonImg);
         pokemonType.innerHTML = data.types[0].type.name;
         pokemonWeight.innerHTML = data.weight;
+        typeCheck();
       }
     });
   } else {
     console.error("***Call Api Error***");
   }
 }
-
 search.addEventListener("click", () => {
+  document.querySelector(".pokemon-display").style.display = "flex";
   callApi();
   document.getElementById("resultsAll").innerHTML = "";
+  pokemonName.value = "";
 });
 
-let counter = "";
 async function getAllPokemons() {
   let response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=811")
     .then((response) => response.json())
@@ -45,6 +46,7 @@ async function getAllPokemons() {
       });
     });
 }
+
 getAllPokemons();
 
 function autocompleteMatch(input) {
@@ -58,11 +60,8 @@ function autocompleteMatch(input) {
     }
   });
 }
-let a = true;
 function showResults(val) {
   res = document.getElementById("result");
-  a = false;
-  console.log(a);
   res.innerHTML = "";
   let list = "";
   let terms = autocompleteMatch(val);
@@ -73,4 +72,48 @@ function showResults(val) {
 }
 function btnClick(e) {
   const pokemonName = (document.querySelector("#pokemonName").value = e.value);
+}
+
+function typeCheck() {
+  if (pokemonType.innerHTML == "fire") {
+    pokemonTitle.style.color = "red";
+    pokemonAbility.style.color = "red";
+    pokemonWeight.style.color = "red";
+    pokemonType.style.color = "red";
+  } else if (pokemonType.innerHTML == "water") {
+    pokemonTitle.style.color = "blue";
+    pokemonAbility.style.color = "blue";
+    pokemonWeight.style.color = "blue";
+    pokemonType.style.color = "blue";
+  } else if (pokemonType.innerHTML == "grass") {
+    pokemonTitle.style.color = "green";
+    pokemonAbility.style.color = "green";
+    pokemonWeight.style.color = "green";
+    pokemonType.style.color = "green";
+  } else if (pokemonType.innerHTML == "electric") {
+    pokemonTitle.style.color = "yellow";
+    pokemonAbility.style.color = "yellow";
+    pokemonWeight.style.color = "yellow";
+    pokemonType.style.color = "yellow";
+  } else if (pokemonType.innerHTML == "poison") {
+    pokemonTitle.style.color = "violet";
+    pokemonAbility.style.color = "violet";
+    pokemonWeight.style.color = "violet";
+    pokemonType.style.color = "violet";
+  } else if (pokemonType.innerHTML == "rock") {
+    pokemonTitle.style.color = "brown";
+    pokemonAbility.style.color = "brown";
+    pokemonWeight.style.color = "brown";
+    pokemonType.style.color = "brown";
+  } else if (pokemonType.innerHTML == "dark") {
+    pokemonTitle.style.color = "lightgrey";
+    pokemonAbility.style.color = "lightgrey";
+    pokemonWeight.style.color = "lightgrey";
+    pokemonType.style.color = "lightgrey";
+  } else {
+    pokemonTitle.style.color = "white";
+    pokemonAbility.style.color = "white";
+    pokemonWeight.style.color = "white";
+    pokemonType.style.color = "white";
+  }
 }
