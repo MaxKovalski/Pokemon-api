@@ -36,6 +36,10 @@ search.addEventListener("click", () => {
   document.getElementById("resultsAll").innerHTML = "";
   pokemonName.value = "";
 });
+const pokemonNameInput = document.getElementById("pokemonName");
+pokemonNameInput.addEventListener("input", () => {
+  callApi();
+});
 
 async function getAllPokemons() {
   let response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=811")
