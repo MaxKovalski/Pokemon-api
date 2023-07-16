@@ -11,34 +11,27 @@ async function callApi() {
   let response = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
   );
-  if (response.status == 200) {
-    return response.json().then((data) => {
-      if (data.name === undefined) {
-        pokemonTitle.innerHTML = " ";
-        return;
-      } else {
-        pokemonTitle.innerHTML = data.name;
-        pokemonAbility.innerHTML = data.abilities[0].ability.name;
-        pokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
-        pokemonImageDiv.appendChild(pokemonImg);
-        pokemonType.innerHTML = data.types[0].type.name;
-        pokemonWeight.innerHTML = data.weight;
-        typeCheck();
-      }
-    });
-  } else {
-    console.error("***Call Api Error***");
-  }
+  response.json().then((data) => {
+    if (data.name === undefined) {
+      pokemonTitle.innerHTML = " ";
+      return;
+    } else {
+      pokemonTitle.innerHTML = data.name;
+      pokemonAbility.innerHTML = data.abilities[0].ability.name;
+      pokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
+      pokemonImageDiv.appendChild(pokemonImg);
+      pokemonType.innerHTML = data.types[0].type.name;
+      pokemonWeight.innerHTML = data.weight;
+      typeCheck();
+    }
+  });
 }
+
 search.addEventListener("click", () => {
   document.querySelector(".pokemon-display").style.display = "flex";
   callApi();
   document.getElementById("resultsAll").innerHTML = "";
   pokemonName.value = "";
-});
-const pokemonNameInput = document.getElementById("pokemonName");
-pokemonNameInput.addEventListener("input", () => {
-  callApi();
 });
 
 async function getAllPokemons() {
